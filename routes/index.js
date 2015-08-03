@@ -5,12 +5,12 @@ var quizController = require('../controllers/quiz_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Quiz' });
+  res.render('index', { title: 'Quiz', errors: []});
 });
 
 /* GET author page. */
 router.get('/author', function(req, res) {
-  res.render('author', { author: 'Miguel A. Cruzado', email: 'macmanzanero@gmail.com' });
+  res.render('author', { author: 'Miguel A. Cruzado', email: 'macmanzanero@gmail.com', errors: []});
 });
 
 // Autoload - factoriza el código si la ruta incluye :quizId
