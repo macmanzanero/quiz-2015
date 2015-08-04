@@ -13,3 +13,9 @@
 	<% } %>
 </table><p>
 <a href="/quizes/new"><button type="button">Crear pregunta</button></a>
+<form method="get" action="/quizes">
+	Texto a buscar:
+  	<input type="text" name="search" value="texto_a_buscar"/>
+  	<input type="submit" value="Enviar"/>
+  	<a href="/quizes"><button type="button">Reset</button></a>
+</form>
