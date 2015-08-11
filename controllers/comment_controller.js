@@ -8,7 +8,7 @@ exports.new = function(req, res) {
 
 // POST /quizes/:quizId/comments
 exports.create = function(req, res) {
-	var comment = models.Comment.build( { texto: req.body.comment.texto, quizId: req.params.quizId });
+	var comment = models.Comment.build( { texto: req.body.comment.texto, QuizId: req.params.quizId });
 	var errors = comment.validate(); //ya qe el objeto errors no tiene then(
 
 	if (errors){
@@ -18,6 +18,6 @@ exports.create = function(req, res) {
 	} else {	
 		comment
 		.save()
-		.then( function(){ res.redirect('/quizes/'+req.params.quizId)})	
+		.then( function(){ res.redirect('/quizes/' + req.params.quizId)})	
 	}
 };
