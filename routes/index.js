@@ -17,6 +17,7 @@ router.get('/author', function(req, res) {
 
 // Autoload - factoriza el código si la ruta incluye :quizId
 router.param('quizId', quizController.load);
+router.param('commentId', commentController.load);		//Autoload :commentId
 
 // Definición de rutas de sesión
 router.get('/login',						sessionController.new);			// formulario de login
@@ -37,5 +38,6 @@ router.delete('/quizes/:quizId(\\d+)',		sessionController.loginRequired, quizCon
 // Definición de rutas de comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new',	commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',		commentController.create);
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
 
 module.exports = router;
