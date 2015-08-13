@@ -32,6 +32,11 @@ exports.create = function(req, res) {
 
 		req.session.user = {id: user.id, username: user.username};
 
+		// En req.session.tiempo guarda la hora de inicio de sesión
+		req.session.tiempo = new Date().getTime();
+		// Controla si se produce auto-logout
+		req.session.autoLogout= false;
+
 		res.redirect(req.session.redir.toString()); // redirect al path anterior al login
 	});
 };
@@ -39,5 +44,12 @@ exports.create = function(req, res) {
 // DELETE /logout -- Destruye la sesión
 exports.destroy = function(req, res) {
 	delete req.session.user;
-	res.redirect(req.session.redir.toString()); // redirect al path anterior al login
-}
+
+	// Si true, se ha producido el auto-logout y redirect a login
+	if (req.session.autoLogout) {
+		res.redirect("/login");
+	} else {
+		// redirect a path anterior a login
+		res.redirect(req.session.redir.toString());
+	}
+};

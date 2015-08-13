@@ -26,10 +26,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: 'Quiz 2015', resave: false, saveUninitialized: true}));
 
-//app.use(bodyParser.urlencoded());
-//app.use(cookieParser('Quiz 2015'));
-//app.use(session());
-
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -41,6 +37,25 @@ app.use(function(req, res, next) {
     }
     // Hace visible req.session en las vistas
     res.locals.session = req.session;
+
+    // Auto-logout. La sesión se desconecta si usuario inactivo más de 2 minutos
+    if (req.session.tiempo) {
+        var actual = new Date().getTime();              // hora actual en milisegundos
+        var diferencia = actual - req.session.tiempo;   // diferencia de la hora de inicio de sesión y la actual
+    
+        console.log("HORA ACTUAL: " + actual);
+        console.log("QUEDA: " + diferencia);
+
+        if (diferencia > (2 * 60 * 1000)) {             // Si la diferencia es > 2 minutos
+            delete req.session.tiempo;                  // elimina la sesión -> desconecta al usuario
+            req.session.autoLogout = true;
+            res.redirect("/logout");
+            console.log("PASA");
+        } else {
+            req.session.tiempo = actual;                // Actualiza la hora de inicio de sesión
+        }
+    };
+
     next();
 });
 

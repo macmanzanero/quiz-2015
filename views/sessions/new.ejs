@@ -1,5 +1,10 @@
 <h2>Login</h2>
 
+<%if (session.autoLogout==true && session.tiempo!="undefined") {%>
+	<br/><span id='ErrorMsgs'>La sesión ha caducado. Vuelva a autenticarse para continuar</span>
+	<%session.autoLogout = false%>
+<%}%>
+
 <form method='POST' action='/login'>
 	<div class="field">
 		<label for="login">Login:</label><br />
